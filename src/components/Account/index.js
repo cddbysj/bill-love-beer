@@ -5,6 +5,7 @@ import { withAuthorization } from "../Session";
 import { AuthUserContext } from "../Session";
 
 import "./index.scss";
+import LoginManagement from "./LoginManagement";
 
 const Account = () => (
   <AuthUserContext.Consumer>
@@ -13,6 +14,7 @@ const Account = () => (
         <h1>Account: {authUser.email}</h1>
         <PasswordForgetForm />
         <PasswordChangeForm />
+        <LoginManagement authUser={authUser} />
       </div>
     )}
   </AuthUserContext.Consumer>

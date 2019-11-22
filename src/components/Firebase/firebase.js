@@ -17,8 +17,11 @@ class Firebase {
   constructor() {
     firebase.initializeApp(firebaseConfig);
     // firebase.analytics();
+    this.EmailAuthProvider= firebase.auth.EmailAuthProvider
     this.auth = firebase.auth();
     this.db = firebase.database();
+    this.googleProvider = new firebase.auth.GoogleAuthProvider();
+    this.twitterProvider = new firebase.auth.TwitterAuthProvider();
   }
 
   //////////////
@@ -29,6 +32,10 @@ class Firebase {
 
   doSignInWithEmailAndPassword = (email, password) =>
     this.auth.signInWithEmailAndPassword(email, password);
+
+  doSignInWithGoogle = () => this.auth.signInWithPopup(this.googleProvider);
+
+  doSignInWithTwitter = () => this.auth.signInWithPopup(this.twitterProvider);
 
   doSignOut = () => this.auth.signOut();
 
