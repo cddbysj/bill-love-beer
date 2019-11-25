@@ -17,7 +17,7 @@ class Firebase {
   constructor() {
     firebase.initializeApp(firebaseConfig);
     // firebase.analytics();
-    this.EmailAuthProvider= firebase.auth.EmailAuthProvider
+    this.EmailAuthProvider = firebase.auth.EmailAuthProvider;
     this.auth = firebase.auth();
     this.db = firebase.database();
     this.googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -43,13 +43,12 @@ class Firebase {
 
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 
-  //////////////////
-  // User API //
-  //////////////////
-  user = uid => this.db.ref(`users/${uid}`);
+  doSendEmailVerification = () =>
+    this.auth.currentUser.sendEmailVerification({
+      url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT
+    });
 
-  users = () => this.db.ref("users");
-
+  // 路由保护 //
   // ** 监听用户登录状态时，引入数据库内的用户数据，根据 roles 属性，对用户进行权限管理 ** //
   // ** 用户权限足够时调用 next，权限不够时调用 fallback ** //
   onAuthUserListener = (next, fallback) =>
@@ -66,6 +65,8 @@ class Firebase {
             const authUser = {
               uid: user.uid,
               email: user.email,
+              emailVerified: user.emailVerified,
+              providerData: user.providerData,
               ...dbUser
             };
             next(authUser);
@@ -74,6 +75,13 @@ class Firebase {
         fallback();
       }
     });
+
+  //////////////////
+  // User API //////
+  //////////////////
+  user = uid => this.db.ref(`users/${uid}`);
+
+  users = () => this.db.ref("users");
 }
 
 export default Firebase;

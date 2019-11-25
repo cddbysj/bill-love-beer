@@ -28,6 +28,7 @@ const withAuthorization = checkAuthorization => Component => {
     render() {
       return (
         <AuthUserContext.Consumer>
+          {/* 修复画面闪烁 */}
           {authUser => (authUser ? <Component {...this.props} /> : null)}
         </AuthUserContext.Consumer>
       );

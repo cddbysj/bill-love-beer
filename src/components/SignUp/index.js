@@ -39,8 +39,11 @@ class SignUpFormBase extends React.Component {
     firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser =>
+        // 在 firebase 数据库内创建用户数据
         firebase.user(authUser.user.uid).set({ username, email, roles })
       )
+      // 发出电子邮件验证
+      .then(() => firebase.doSendEmailVerification())
       .then(() => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME);

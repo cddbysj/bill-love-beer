@@ -1,11 +1,12 @@
 import React from "react";
 import { PasswordForgetForm } from "../PasswordForget";
 import { PasswordChangeForm } from "../PasswordChange";
-import { withAuthorization } from "../Session";
+import { withAuthorization, withEmailVerification } from "../Session";
 import { AuthUserContext } from "../Session";
 
 import "./index.scss";
 import LoginManagement from "./LoginManagement";
+import { compose } from "recompose";
 
 const Account = () => (
   <AuthUserContext.Consumer>
@@ -20,4 +21,7 @@ const Account = () => (
   </AuthUserContext.Consumer>
 );
 
-export default withAuthorization(authUser => !!authUser)(Account);
+export default compose(
+  withEmailVerification,
+  withAuthorization(authUser => !!authUser)
+)(Account);

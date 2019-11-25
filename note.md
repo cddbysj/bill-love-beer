@@ -2,7 +2,7 @@
 title: 一个展示啤酒的练手项目
 ---
 
-这是一个练手项目，主要是利用 [punkapi](https://punkapi.com/documentation/v2) 来做出一个简单的展示页面。后续可能使用 [firebase](https://console.firebase.google.com/) 来做用户认证和云端数据库。
+这是一个练手项目，主要是利用 [punkapi](https://punkapi.com/documentation/v2) 来做出一个简单的展示页面。使用 [firebase](https://console.firebase.google.com/) 来做用户认证和云端数据库。由于一些原因， firebase 网络不太稳定，后续可能采用国内的 [lean cloud](https://leancloud.cn/docs/leanstorage_guide-js.html) 替代。
 
 上面的这个 API 是以啤酒为主题的。那么在开始之前，先要对啤酒的有关知识做一点简要的介绍（我不太爱喝啤酒）。
 

@@ -1,9 +1,12 @@
 import React from "react";
+import { compose } from "recompose";
+
 import { withAuthorization } from "../Session";
+import { withEmailVerification } from "../Session";
 import UserList from "./UserList";
 import * as ROLES from "../../constants/roles";
 
-import './index.scss';
+import "./index.scss";
 
 class AdminPage extends React.Component {
   constructor(props) {
@@ -46,6 +49,10 @@ class AdminPage extends React.Component {
   }
 }
 
-const checkAuthorization = authUser => authUser && !!authUser.roles[ROLES.ADMIN];
+const checkAuthorization = authUser =>
+  authUser && !!authUser.roles[ROLES.ADMIN];
 
-export default withAuthorization(checkAuthorization)(AdminPage);
+export default compose(
+  withEmailVerification,
+  withAuthorization(checkAuthorization)
+)(AdminPage);
