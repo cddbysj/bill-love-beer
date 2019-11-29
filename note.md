@@ -23,11 +23,23 @@ title: 一个展示啤酒的练手项目
 
 ## 开始
 
+## Todo
+
+- 使用 [Material-UI 组件库](https://material-ui.com/zh/getting-started/example-projects/)
+
+- 将数据库从 Firebase Realtime Database 转向 Cloud Firestore
+
+- 使用 Redux 进行状态管理
+
 ## 参考链接
 
 ### 教程参考
 
 - [Complete firebase authentication react tutorial](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial) 使用 firebase 作用户验证
+
+- [React Most Wanted](https://github.com/TarikHuber/react-most-wanted) Material UI 范例项目
+
+- [React + Material-UI + Firebase 项目模版](https://github.com/Phoqe/react-material-ui-firebase) Material UI 范例项目
 
 ### 仿站参考
 

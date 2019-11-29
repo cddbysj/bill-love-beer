@@ -8,8 +8,7 @@ import { withEmailVerification } from "../Session";
 import * as ROLES from "../../constants/roles";
 import * as ROUTES from "../../constants/routes";
 
-import UserItem from "./UserItem";
-import UserList from "./UserList";
+import { UserItem, UserList } from "../Users";
 
 import "./index.scss";
 

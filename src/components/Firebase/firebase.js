@@ -13,10 +13,12 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
+// Firebase 类封装了 firebase 提供的 API，像胶水一样让我们的 React 应用程序和 firebase API 连接起来了
 class Firebase {
   constructor() {
     firebase.initializeApp(firebaseConfig);
     // firebase.analytics();
+    this.serverValue = firebase.database.ServerValue;
     this.EmailAuthProvider = firebase.auth.EmailAuthProvider;
     this.auth = firebase.auth();
     this.db = firebase.database();
@@ -82,6 +84,13 @@ class Firebase {
   user = uid => this.db.ref(`users/${uid}`);
 
   users = () => this.db.ref("users");
+
+  /////////////////
+  // Message API //
+  /////////////////
+  message = uid => this.db.ref(`messages/${uid}`);
+
+  messages = () => this.db.ref("messages");
 }
 
 export default Firebase;

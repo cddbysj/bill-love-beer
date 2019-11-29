@@ -1,10 +1,19 @@
 import React from "react";
+import { compose } from "recompose";
 
-const Home = props => (
+import { withEmailVerification, withAuthorization } from "../Session";
+
+import Messages from "../Messages";
+
+const HomePage = props => (
   <div>
     <h1>Welcome!</h1>
-    <p>this is home page</p>
+    <p>The Home Page is accessible by every signed in user.</p>
+    <Messages />
   </div>
 );
 
-export default Home;
+export default compose(
+  withEmailVerification,
+  withAuthorization(authUser => !!authUser)
+)(HomePage);
