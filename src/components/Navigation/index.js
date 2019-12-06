@@ -1,48 +1,63 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import "./index.scss";
+import { Menu, Icon } from "antd";
 
 import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
 import SignOutButton from "../SignOut";
 import { AuthUserContext } from "../Session";
 
+const { SubMenu } = Menu;
+
 const NavigationAuth = ({ authUser }) => (
-  <div className="Navigation">
-    <ul>
-      <li>
-        <Link to={ROUTES.LANDING}>Landing</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.HOME}>Home</Link>
-      </li>
-      {!!authUser.roles[ROLES.ADMIN] && (
-        <li>
-          <Link to={ROUTES.ADMIN}>Admin</Link>
-        </li>
-      )}
-      <li>
+  <Menu mode="horizontal" theme="dark" style={{ lineHeight: "64px" }}>
+    <Menu.Item key="landing">
+      <Link to={ROUTES.LANDING}>Landing</Link>
+    </Menu.Item>
+    <Menu.Item key="home">
+      <Link to={ROUTES.HOME}>
+        <Icon type="home" />
+        Home
+      </Link>
+    </Menu.Item>
+    {!!authUser.roles[ROLES.ADMIN] && (
+      <Menu.Item key="admin">
+        <Link to={ROUTES.ADMIN}>
+          <Icon type="setting" />
+          Admin
+        </Link>
+      </Menu.Item>
+    )}
+    <SubMenu
+      title={
+        <span>
+          <Icon type="user" />
+          Account
+        </span>
+      }
+    >
+      <Menu.Item key="email">
         <Link to={ROUTES.ACCOUNT}>{authUser.email}</Link>
-      </li>
-      <li>
+      </Menu.Item>
+      <Menu.Item key="signout">
         <SignOutButton />
-      </li>
-    </ul>
-  </div>
+      </Menu.Item>
+    </SubMenu>
+  </Menu>
 );
 
 const NavigationNonAuth = () => (
-  <div className="Navigation">
-    <ul>
-      <li>
-        <Link to={ROUTES.LANDING}>Landing</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-      </li>
-    </ul>
-  </div>
+  <Menu mode="horizontal" theme="dark" style={{ lineHeight: "64px" }}>
+    <Menu.Item>
+      <Link to={ROUTES.LANDING}>Landing</Link>
+    </Menu.Item>
+    <Menu.Item>
+      <Link to={ROUTES.SIGN_IN}>
+        <Icon type="login" />
+        Sign In
+      </Link>
+    </Menu.Item>
+  </Menu>
 );
 
 const Navigation = () => (

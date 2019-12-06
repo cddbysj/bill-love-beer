@@ -1,15 +1,18 @@
 import React from "react";
+import { Button, Input, Spin } from "antd";
 
 import { AuthUserContext } from "../Session";
 import { withUsersSubscription } from "../Users";
 
 import MessageList from "./MessageList";
 
+const { TextArea } = Input;
+
 class MessagesBase extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [],
+      messages: null,
       text: "",
       limit: 5,
       loading: false,
@@ -63,12 +66,12 @@ class MessagesBase extends React.Component {
   };
 
   onCreateMessage = (event, authUser) => {
-    event.preventDefault();
-
+    const { text } = this.state;
+    if (!text || !text.trim()) return;
     this.props.firebase.messages().push({
-      text: this.state.text,
       userId: authUser.uid,
-      createdAt: this.props.firebase.serverValue.TIMESTAMP
+      createdAt: this.props.firebase.serverValue.TIMESTAMP,
+      text
     });
 
     this.setState({ text: "" });
@@ -97,20 +100,23 @@ class MessagesBase extends React.Component {
       <AuthUserContext.Consumer>
         {authUser => (
           <div>
-            <form onSubmit={event => this.onCreateMessage(event, authUser)}>
-              <input
-                name="message"
-                value={text}
-                type="text"
-                onChange={this.onTextChange}
-              />
-              <button type="submit">Send</button>
-            </form>
-            {!loading && messages && (
-              <button onClick={this.onNextPage}>More</button>
-            )}
-            {loading && <div>Loading...</div>}
-            {messages ? (
+            <TextArea
+              name="message"
+              value={text}
+              onChange={this.onTextChange}
+              type="text"
+              placeholder="Enter a new message"
+              autoSize
+              autoFocus
+              allowClear
+            />
+            <Button
+              onClick={event => this.onCreateMessage(event, authUser)}
+              type="primary"
+            >
+              Send
+            </Button>
+            {messages && (
               <MessageList
                 authUser={authUser}
                 users={users}
@@ -118,8 +124,29 @@ class MessagesBase extends React.Component {
                 onRemoveMessage={this.onRemoveMessage}
                 onEditMessage={this.onEditMessage}
               />
-            ) : (
-              <div>No messages yet.</div>
+            )}
+            {loading && (
+              <div
+                style={{
+                  textAlign: "center",
+                  padding: 30,
+                  borderRadius: "4px"
+                }}
+              >
+                <Spin delay={500} />
+              </div>
+            )}
+            {!loading && messages && (
+              <div
+                style={{
+                  textAlign: "center",
+                  marginTop: 12
+                }}
+              >
+                <Button loading={loading} onClick={this.onNextPage}>
+                  More
+                </Button>
+              </div>
             )}
 
             {error && <div>{error.message}</div>}

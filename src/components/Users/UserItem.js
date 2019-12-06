@@ -1,4 +1,5 @@
 import React from "react";
+import { Descriptions, Button, Spin } from "antd";
 import { withFirebase } from "../Firebase";
 
 class UserItemBase extends React.Component {
@@ -43,31 +44,29 @@ class UserItemBase extends React.Component {
   render() {
     const { user, loading } = this.state;
     return (
-      <div className="admin-detail">
-        <h2>User ({user.username})</h2>
-        {loading && <div>Loading...</div>}
+      <div>
+        {loading && (
+          <div>
+            <Spin loading={loading} />
+          </div>
+        )}
 
         {user && (
-          <ul>
-            <li>
-              <strong>Name: </strong>
+          <Descriptions title="User Info" layout="vertical" bordered>
+            <Descriptions.Item label="UserName">
               {user.username}
-            </li>
-            <li>
-              <strong>Email:</strong>
-              {user.email}
-            </li>
-            <li>
-              <strong>ID: </strong>
-              {user.uid}
-            </li>
-            <li>
-              <button onClick={this.onSendPasswordResetEmail}>
-                Send Reset Email
-              </button>
-            </li>
-          </ul>
+            </Descriptions.Item>
+            <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
+            <Descriptions.Item label="ID">{user.uid}</Descriptions.Item>
+          </Descriptions>
         )}
+        <Button
+          style={{ margin: 20 }}
+          type="primary"
+          onClick={this.onSendPasswordResetEmail}
+        >
+          Send Reset Email
+        </Button>
       </div>
     );
   }

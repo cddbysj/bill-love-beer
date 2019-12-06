@@ -10,8 +10,6 @@ import * as ROUTES from "../../constants/routes";
 
 import { UserItem, UserList } from "../Users";
 
-import "./index.scss";
-
 const AdminPage = () => (
   <div className="Admin">
     <h1>Admin page</h1>
